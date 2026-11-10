@@ -1,0 +1,47 @@
+
+name: Continuous Integration
+
+#on:push -> workflow vai ser executado quando enviamos os commits ao GitHub
+
+#on:pull_request -> workflow vai ser executado quando abrimos ou atualizamos um pull request
+on:
+  push:
+  pull_request:
+
+jobs:
+  #Verifica a própria ferramenta que gera os projetos
+  test-generator:
+    #testes vão ser executados em uma VM disponibilizada pelo GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        #obtém o código do nosso repositório
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        #configura o python para executar os testes
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Run generator tests
+        run: python -m unittest discover -s tests -v
+# Verifica a aplicação Java
+  test-java-template:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        #configuta java-25 para executar o maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Run Maven tests
+        working-directory: templates/java-basic
+        run: mvn --batch-mode clean test
