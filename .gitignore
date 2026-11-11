@@ -23,3 +23,7 @@ Thumbs.db
 
 # Projetos gerados automaticamente pela harness
 /generated/
+
+# Arquivos gerados automaticamente pelo Python
+__pycache__/
+*.pyc
