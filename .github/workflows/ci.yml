@@ -1,4 +1,3 @@
-
 name: Continuous Integration
 
 #on:push -> workflow vai ser executado quando enviamos os commits ao GitHub
@@ -45,3 +44,17 @@ jobs:
       - name: Run Maven tests
         working-directory: templates/java-basic
         run: mvn --batch-mode clean test
+
+# Verifica se o Docker foi construído
+  test-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t java-basic-test templates/java-basic
+
+      - name: Run Java tests inside Docker
+        run: docker run --rm java-basic-test
