@@ -58,6 +58,8 @@ class TestCreateProject(unittest.TestCase):
         pom = (project / "pom.xml").read_text(encoding="utf-8")
         self.assertIn("<artifactId>calculadora</artifactId>", pom)
 
+        self.assertTrue((project / "CLAUDE.md").exists())
+
 # verifica se a harness impede nomes duplicados
     def test_rejects_duplicate_name(self):
         self.run_generator("calculadora")
