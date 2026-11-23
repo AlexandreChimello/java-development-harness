@@ -7,6 +7,9 @@ WORKDIR /app
 #Copia o pom.xml para o container
 COPY pom.xml .
 
+#Copia o checkstyle para análise estática
+COPY checkstyle.xml .
+
 #Copia as classes java e testes
 COPY src ./src
 
